@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SalesWebMvc.Models
@@ -21,7 +21,7 @@ namespace SalesWebMvc.Models
             Name = name;
         }
 
-        public void AddSeller (Seller seller)
+        public void AddSeller(Seller seller)
         {
             Sellers.Add(seller);
         }
