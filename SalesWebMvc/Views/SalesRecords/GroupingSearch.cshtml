@@ -1,58 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using SalesWebMvc.Services;
+﻿@model IEnumerable<IGrouping<Department, SalesRecord>>
 
-namespace SalesWebMvc.Controllers
+@{
+    ViewData["Title"] = "Grouping Search";
+    DateTime minDate = DateTime.Parse(ViewData["minDate"] as string);
+    DateTime maxDate = DateTime.Parse(ViewData["maxDate"] as string);
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="minDate">Min Date</label>
+                    <input type="date" class="form-control" name="minDate" value=@ViewData["minDate"]>
+                </div>
+                <div class="form-group">
+                    <label for="maxDate">Max Date</label>
+                    <input type="date" class="form-control" name="maxDate" value=@ViewData["maxDate"]>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+    </div>
+</nav>
+
+@foreach (var departmentGroup in Model)
 {
-    public class SalesRecordsController : Controller
-    {
-        private readonly SalesRecordService _salesRecordService;
-
-        public SalesRecordsController(SalesRecordService salesRecordService)
-        {
-            _salesRecordService = salesRecordService;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult>
-    SimpleSearch(DateTime? minDate, DateTime? maxDate)
-    {
-    if (!minDate.HasValue)
-    {
-    minDate = new DateTime(DateTime.Now.Year, 1, 1);
-    }
-    if (!maxDate.HasValue)
-    {
-    maxDate = DateTime.Now;
-    }
-    ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd");
-    ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
-    var result = await _salesRecordService.FindByDateAsync(minDate, maxDate);
-    return View(result);
-    }
-
-    public async Task<IActionResult>
-        GroupingSearch(DateTime? minDate, DateTime? maxDate)
-        {
-        if (!minDate.HasValue)
-        {
-        minDate = new DateTime(DateTime.Now.Year, 1, 1);
-        }
-        if (!maxDate.HasValue)
-        {
-        maxDate = DateTime.Now;
-        }
-        ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd");
-        ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
-        var result = await _salesRecordService.FindByDateGroupingAsync(minDate, maxDate);
-        return View(result);
-        }
-        }
-        }
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Department @departmentGroup.Key.Name, Total sales = @departmentGroup.Key.TotalSales(minDate, maxDate).ToString("F2")</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr class="success">
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Seller
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in departmentGroup)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Seller.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
