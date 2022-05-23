@@ -16,7 +16,7 @@
 
 
 <p align="center">
-  <img src="https://img.shields.io/website?down_message=offline&logo=vercel&style=for-the-badge&up_message=online&url=https%3A%2F%2Fdaniel-martins.netlify.app%2F&labelColor=95a5a6&logoColor=black" alt="Server Status">
+  <img src="https://img.shields.io/website?down_message=offline&logo=vercel&style=for-the-badge&up_message=online&url=https%3A%2F%2Fdaniel-martins.netlxify.app%2F&labelColor=95a5a6&logoColor=black" alt="Server Status">
   <img src="https://img.shields.io/github/last-commit/imthedaniel/salesWeb-mvc?style=for-the-badge&color=18bd9c&labelColor=95a5a6" alt="Languages">
   <img src="https://img.shields.io/github/languages/count/imthedaniel/salesWeb-mvc?style=for-the-badge&color=18bd9c&labelColor=95a5a6" alt="Languages">
   <img src="https://img.shields.io/github/license/imthedaniel/salesWeb-mvc?style=for-the-badge&labelColor=95a5a6&color=18bd9c" alt="Licenses" />
